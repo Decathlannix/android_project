@@ -23,10 +23,6 @@
         android:label="Create an account"
         tools:layout="@layout/fragment_create_account">
         <action
-            android:id="@+id/action_createAccountFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/loginFragment" />
-        <action
             android:id="@+id/action_createAccountFragment_to_profileFragment"
             app:destination="@id/profileFragment"
             app:popUpTo="@id/loginFragment" />
@@ -39,8 +35,7 @@
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/loginFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="false" />
+            app:popUpTo="@id/loginFragment" />
         <action
             android:id="@+id/action_profileFragment_to_cameraFragment"
             app:destination="@id/cameraFragment" />
@@ -53,6 +48,7 @@
         <action
             android:id="@+id/action_cameraFragment_to_profileFragment"
             app:destination="@id/profileFragment"
-            app:popUpTo="@id/profileFragment" />
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

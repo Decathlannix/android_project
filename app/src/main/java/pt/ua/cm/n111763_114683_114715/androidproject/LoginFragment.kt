@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -31,6 +32,7 @@ import pt.ua.cm.n111763_114683_114715.androidproject.databinding.FragmentLoginBi
 
 class LoginFragment : Fragment(), View.OnClickListener {
 
+    private val viewModel: UserViewModel by activityViewModels()
     private lateinit var binding: FragmentLoginBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var logInGoogleButton: SignInButton
@@ -86,10 +88,11 @@ class LoginFragment : Fragment(), View.OnClickListener {
     private fun handleSignInResult(task: Task<GoogleSignInAccount>) {
         if (task.isSuccessful) {
             val user: GoogleSignInAccount = task.result
-            updateUIGoogle(user)
+            viewModel.saveLoginData(user.email!!, user.id!!)
             findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
         } else {
-            Log.i(TAG, "handleSignInResult failure: ${task.exception.toString()}")
+            Toast.makeText(requireContext(), "Google log in failed", Toast.LENGTH_LONG).show()
+            Log.e(TAG, "handleSignInResult: ${task.exception.toString()}")
         }
     }
 
@@ -106,29 +109,15 @@ class LoginFragment : Fragment(), View.OnClickListener {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) {
                     if (it.isSuccessful) {
-                        updateUI(auth.currentUser!!)
+                        viewModel.saveLoginData(auth.currentUser!!.providerData[0].email!!, auth.currentUser!!.providerData[0].uid)
+                        findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
                         emailInputText.text?.clear()
                         passwordInputText.text?.clear()
-                        findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
                     } else {
-                        Log.i(TAG, "createUserWithEmailandPassword failure: ${it.exception.toString()}")
+                        Toast.makeText(requireContext(), "Log in failed", Toast.LENGTH_LONG).show()
+                        Log.e(TAG, "logInEmailPassword: ${it.exception.toString()}")
                     }
                 }
         }
     }
-
-    private fun updateUIGoogle(user: GoogleSignInAccount) {
-        Toast.makeText(requireActivity(), "UID: ${user.id}, Email: ${user.email}, Display name: ${user.displayName}, Photo URL: ${user.photoUrl}", Toast.LENGTH_LONG).show()
-    }
-
-    private fun updateUI(user: FirebaseUser) {
-        Toast.makeText(requireActivity(), "UID: ${user.providerData[0].uid}, Email: ${user.providerData[0].email}, Display name: ${user.providerData[0].displayName}, Photo URL: ${user.providerData[0].photoUrl}", Toast.LENGTH_LONG).show()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        auth.signOut()
-        googleSignInClient.signOut()
-    }
-
 }

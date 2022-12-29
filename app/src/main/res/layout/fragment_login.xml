@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,7 +12,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
-            android:gravity="bottom">
+            android:gravity="bottom"
+            app:startIconDrawable="@drawable/ic_email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailInput"
@@ -27,7 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="top">
+            android:gravity="top"
+            app:startIconDrawable="@drawable/ic_password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordInput"
@@ -41,7 +43,7 @@
                 android:id="@+id/logInEmailPassword"
                 android:layout_height="0dp"
                 android:layout_width="wrap_content"
-                android:layout_weight="0.5"
+                android:layout_weight="0.3"
                 android:text="Log In"
                 android:gravity="center"/>
 
@@ -58,6 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:layout_marginEnd="20dp"
                     android:text="Create an account"
                     android:gravity="center"/>
 
@@ -65,7 +68,8 @@
                     android:id="@+id/logInGoogle"
                     android:layout_height="wrap_content"
                     android:layout_width="0dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:layout_marginStart="20dp" />
             </LinearLayout>
     </LinearLayout>
 </layout>

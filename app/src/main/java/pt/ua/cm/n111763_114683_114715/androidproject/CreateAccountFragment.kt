@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -20,6 +22,7 @@ import pt.ua.cm.n111763_114683_114715.androidproject.databinding.FragmentCreateA
 
 class CreateAccountFragment : Fragment(), View.OnClickListener {
 
+    private val viewModel: UserViewModel by activityViewModels()
     private lateinit var binding: FragmentCreateAccountBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var emailInputText: TextInputEditText
@@ -59,17 +62,13 @@ class CreateAccountFragment : Fragment(), View.OnClickListener {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) {
                     if (it.isSuccessful) {
-                        // Create account success
-                        updateUI(auth.currentUser!!)
+                        viewModel.saveLoginData(auth.currentUser!!.providerData[0].email!!, auth.currentUser!!.providerData[0].uid)
                         findNavController().navigate(R.id.action_createAccountFragment_to_profileFragment)
                     } else {
-                        Log.i(ContentValues.TAG, "createUserWithEmailandPassword failure", it.exception)
+                        Toast.makeText(requireContext(), "Account creation failed", Toast.LENGTH_LONG).show()
+                        Log.e(ContentValues.TAG, "createAccount: ${it.exception.toString()}")
                     }
                 }
         }
-    }
-
-    private fun updateUI(user: FirebaseUser) {
-        Toast.makeText(requireActivity(), "Provider: ${user.providerData[0].providerId}, Email: ${user.providerData[0].email}, UID: ${user.providerData[0].uid}, Display name: ${user.providerData[0].displayName}, Photo URL: ${user.providerData[0].photoUrl}", Toast.LENGTH_LONG).show()
     }
 }
