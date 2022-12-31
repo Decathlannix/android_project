@@ -42,6 +42,8 @@
         <action
             android:id="@+id/action_profileFragment_to_leaderboardFragment"
             app:destination="@id/leaderboardFragment" />
+            android:id="@+id/action_profileFragment_to_playFragment"
+            app:destination="@id/playFragment" />
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
@@ -61,6 +63,12 @@
         tools:layout="@layout/fragment_leaderboard" >
         <action
             android:id="@+id/action_leaderboardFragment_to_profileFragment"
+        android:id="@+id/playFragment"
+        android:name="pt.ua.cm.n111763_114683_114715.androidproject.PlayFragment"
+        android:label="PlayFragment"
+        tools:layout="@layout/fragment_play">
+        <action
+            android:id="@+id/action_playFragment_to_profileFragment"
             app:destination="@id/profileFragment"
             app:popUpTo="@id/profileFragment"
             app:popUpToInclusive="true" />

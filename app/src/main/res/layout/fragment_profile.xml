@@ -39,6 +39,14 @@
                 android:layout_weight="1"
                 android:background="@drawable/ic_logout"
                 android:scaleType="fitCenter"/>
+
+            <ImageButton
+                android:id="@+id/playButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ic_email"
+                android:scaleType="fitCenter"/>
         </LinearLayout>
 
         <RelativeLayout

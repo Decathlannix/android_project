@@ -42,6 +42,7 @@ class ProfileFragment : Fragment(), OnClickListener {
     private lateinit var emailText: TextView
     private lateinit var leaderboardButton: ImageButton
     private lateinit var logoutButton: ImageButton
+    private lateinit var playButton: ImageButton
     private lateinit var launcher: ActivityResultLauncher<Intent>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -56,12 +57,14 @@ class ProfileFragment : Fragment(), OnClickListener {
         emailText = binding.emailText
         leaderboardButton = binding.leaderboardButton
         logoutButton = binding.logoutButton
+        playButton = binding.playButton
 
         takePhotoButton.setOnClickListener(this)
         choosePhotoButton.setOnClickListener(this)
         saveButton.setOnClickListener(this)
         leaderboardButton.setOnClickListener(this)
         logoutButton.setOnClickListener(this)
+        playButton.setOnClickListener(this)
         emailText.text = viewModel.email
 
         viewModel.username.observe(viewLifecycleOwner) {
@@ -92,6 +95,7 @@ class ProfileFragment : Fragment(), OnClickListener {
             R.id.saveButton -> saveProfile()
             R.id.leaderboardButton -> findNavController().navigate(R.id.action_profileFragment_to_leaderboardFragment)
             R.id.logoutButton -> logOut()
+            R.id.playButton -> play()
         }
     }
 
@@ -124,5 +128,9 @@ class ProfileFragment : Fragment(), OnClickListener {
         }
         viewModel.clearProfileData()
         findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
+    }
+
+    private fun play(){
+        findNavController().navigate(R.id.action_profileFragment_to_playFragment)
     }
 }
