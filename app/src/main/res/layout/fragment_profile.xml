@@ -25,6 +25,14 @@
                 android:gravity="center"/>
 
             <ImageButton
+                android:id="@+id/leaderboardButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/ic_leaderboard"
+                android:scaleType="fitCenter"/>
+
+            <ImageButton
                 android:id="@+id/logoutButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

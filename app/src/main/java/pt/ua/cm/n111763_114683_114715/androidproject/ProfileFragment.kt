@@ -40,6 +40,7 @@ class ProfileFragment : Fragment(), OnClickListener {
     private lateinit var userName: TextInputEditText
     private lateinit var saveButton: Button
     private lateinit var emailText: TextView
+    private lateinit var leaderboardButton: ImageButton
     private lateinit var logoutButton: ImageButton
     private lateinit var launcher: ActivityResultLauncher<Intent>
 
@@ -53,11 +54,13 @@ class ProfileFragment : Fragment(), OnClickListener {
         userName = binding.usernameInput
         saveButton = binding.saveButton
         emailText = binding.emailText
+        leaderboardButton = binding.leaderboardButton
         logoutButton = binding.logoutButton
 
         takePhotoButton.setOnClickListener(this)
         choosePhotoButton.setOnClickListener(this)
         saveButton.setOnClickListener(this)
+        leaderboardButton.setOnClickListener(this)
         logoutButton.setOnClickListener(this)
         emailText.text = viewModel.email
 
@@ -87,6 +90,7 @@ class ProfileFragment : Fragment(), OnClickListener {
             R.id.takePhotoButton -> findNavController().navigate(R.id.action_profileFragment_to_cameraFragment)
             R.id.choosePhotoButton -> choosePhoto()
             R.id.saveButton -> saveProfile()
+            R.id.leaderboardButton -> findNavController().navigate(R.id.action_profileFragment_to_leaderboardFragment)
             R.id.logoutButton -> logOut()
         }
     }

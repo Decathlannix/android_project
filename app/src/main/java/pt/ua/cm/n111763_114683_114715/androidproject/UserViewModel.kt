@@ -1,9 +1,24 @@
 package pt.ua.cm.n111763_114683_114715.androidproject
 
+import android.net.Uri
+import android.util.Log
+import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.auth.User
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.*
+import java.io.File
+import java.io.PrintWriter
+import kotlin.coroutines.suspendCoroutine
+import kotlin.random.Random
 
 class UserViewModel: ViewModel() {
     private lateinit var _email: String
@@ -18,9 +33,9 @@ class UserViewModel: ViewModel() {
     private var _photoURI = MutableLiveData("")
     val photoURI: LiveData<String>
         get() = _photoURI
-    private lateinit var _scores: List<Int>
-    val scores: List<Int>
-        get() = _scores
+    private var _usersLeaderboardInfo = MutableLiveData<MutableList<UserInfo>>()
+    val usersLeaderboardInfo: LiveData<MutableList<UserInfo>>
+        get() = _usersLeaderboardInfo
 
     fun saveLoginData(email: String, uid: String) {
         _email = email
@@ -32,14 +47,21 @@ class UserViewModel: ViewModel() {
         FirebaseFirestore.getInstance().collection("users").document(_uid).get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 if (!task.result.exists()) {
-                    val data = hashMapOf("email" to _email)
+                    val data = hashMapOf("email" to _email, "score" to Random.nextInt(1, 21).toString())
                     task.result.reference.set(data)
                 } else {
-                    if (!task.result.getString("name").isNullOrEmpty()) _username.value = task.result.data?.get("name").toString()
-                    if (!task.result.getString("imagePath").isNullOrEmpty()) _photoURI.value = task.result.data?.get("imagePath").toString()
+                    if (!task.result.getString("name").isNullOrBlank())
+                        _username.value = task.result.getString("name")
                 }
             }
         }
+
+        val localFile = File.createTempFile("avatar", ".jpg")
+
+        FirebaseStorage.getInstance().reference.child("images/${_uid}/avatar.jpg").getFile(localFile)
+            .addOnSuccessListener {
+                _photoURI.value = Uri.fromFile(localFile).toString()
+            }
     }
 
     fun savePhotoURI(photoURI: String) {
@@ -48,10 +70,48 @@ class UserViewModel: ViewModel() {
 
     fun saveProfileToFirestore(username: String) {
         _username.value = username
-        FirebaseFirestore.getInstance().collection("users")
+        FirebaseFirestore.getInstance()
+            .collection("users")
             .document(_uid)
-            .update("name", _username.value,
-                "imagePath", _photoURI.value)
+            .update("name", _username.value)
+
+
+        val picturePathRef = FirebaseStorage.getInstance().reference.child("images/${_uid}/avatar.jpg")
+        picturePathRef.putFile(_photoURI.value!!.toUri())
+    }
+
+    fun loadLeaderboardInfoFromFirebase() {
+        val auxList = mutableListOf<UserInfo>()
+
+        fetchFirestoreProfileData(auxList)
+    }
+
+    private fun fetchFirestoreProfileData(auxList: MutableList<UserInfo>) {
+        FirebaseFirestore.getInstance().collection("users").get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    if (!document.getString("score").isNullOrBlank()) {
+                        auxList.add(UserInfo(
+                            document.id,
+                            document.getString("name")!!,
+                            document.getString("email")!!,
+                            document.getString("score")!!.toInt()))
+                    }
+                }
+                fetchFirebaseStorageProfileData(auxList)
+            }
+    }
+
+    private fun fetchFirebaseStorageProfileData(auxList: MutableList<UserInfo>) {
+        for (user in auxList) {
+            val localFile = File.createTempFile("avatar", ".jpg")
+            FirebaseStorage.getInstance().reference.child("images/${user.uid}/avatar.jpg").getFile(localFile)
+                .addOnSuccessListener {
+                    user.setImagePath(Uri.fromFile(localFile).toString())
+                    Log.i("fetchStorage", "${user.name}, ${user.email}, ${user.uid}, ${user.score}, ${user.image}")
+                    _usersLeaderboardInfo.value = auxList
+                }
+        }
     }
 
     fun clearProfileData() {
