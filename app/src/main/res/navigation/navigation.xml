@@ -40,10 +40,13 @@
             android:id="@+id/action_profileFragment_to_cameraFragment"
             app:destination="@id/cameraFragment" />
         <action
+<<<<<<< HEAD
             android:id="@+id/action_profileFragment_to_leaderboardFragment"
             app:destination="@id/leaderboardFragment" />
+=======
             android:id="@+id/action_profileFragment_to_playFragment"
             app:destination="@id/playFragment" />
+>>>>>>> 45e3fa79061b0b7a9dcd28a92bfa98cf87c342cc
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
@@ -57,18 +60,21 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
+<<<<<<< HEAD
         android:id="@+id/leaderboardFragment"
         android:name="pt.ua.cm.n111763_114683_114715.androidproject.LeaderboardFragment"
         android:label="Leaderboards"
         tools:layout="@layout/fragment_leaderboard" >
         <action
             android:id="@+id/action_leaderboardFragment_to_profileFragment"
+=======
         android:id="@+id/playFragment"
         android:name="pt.ua.cm.n111763_114683_114715.androidproject.PlayFragment"
         android:label="PlayFragment"
         tools:layout="@layout/fragment_play">
         <action
             android:id="@+id/action_playFragment_to_profileFragment"
+>>>>>>> 45e3fa79061b0b7a9dcd28a92bfa98cf87c342cc
             app:destination="@id/profileFragment"
             app:popUpTo="@id/profileFragment"
             app:popUpToInclusive="true" />
