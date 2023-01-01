@@ -1,4 +1,4 @@
-package pt.ua.cm.n111763_114683_114715.androidproject
+package pt.ua.cm.n111763_114683_114715.androidproject.fragments
 
 import android.content.ContentValues
 import android.os.Bundle
@@ -12,12 +12,12 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import pt.ua.cm.n111763_114683_114715.androidproject.R
+import pt.ua.cm.n111763_114683_114715.androidproject.viewmodel.UserViewModel
 import pt.ua.cm.n111763_114683_114715.androidproject.databinding.FragmentCreateAccountBinding
 
 class CreateAccountFragment : Fragment(), View.OnClickListener {
@@ -31,7 +31,8 @@ class CreateAccountFragment : Fragment(), View.OnClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_account, container, false)
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_create_account, container, false)
         auth = Firebase.auth
 
         createAccountButton = binding.createAccount

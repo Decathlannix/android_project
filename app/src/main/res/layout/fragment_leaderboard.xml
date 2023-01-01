@@ -3,10 +3,35 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/tetris_background">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Leaderboard"
+        android:textColor="#000000"
+        android:textSize="40sp"
+        android:textStyle="bold|italic"
+        android:gravity="center"
+        android:fontFamily="@font/futura_black"
+        android:shadowColor="#FFFFFF"
+        android:shadowRadius="50"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/leaderboardList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#C8048DFA"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"/>
+    </LinearLayout>
 </layout>

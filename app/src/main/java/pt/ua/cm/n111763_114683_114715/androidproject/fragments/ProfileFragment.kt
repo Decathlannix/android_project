@@ -1,8 +1,6 @@
-package pt.ua.cm.n111763_114683_114715.androidproject
+package pt.ua.cm.n111763_114683_114715.androidproject.fragments
 
 import android.app.Activity
-import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,19 +12,18 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.tasks.Task
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import pt.ua.cm.n111763_114683_114715.androidproject.R
+import pt.ua.cm.n111763_114683_114715.androidproject.viewmodel.UserViewModel
 import pt.ua.cm.n111763_114683_114715.androidproject.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment(), OnClickListener {

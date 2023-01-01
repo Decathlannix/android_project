@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_margin="10dp"
         android:gravity="center">
-
-
-
 
         <Button
             android:id="@+id/saveButton"
@@ -31,7 +27,6 @@
             android:layout_height="0dp"
             android:layout_weight="0.5"
             android:orientation="horizontal">
-
 
             <ImageButton
                 android:id="@+id/leftButton"
@@ -65,6 +60,5 @@
                 android:background="@drawable/ic_email"
                 android:scaleType="fitCenter"/>
         </LinearLayout>
-
     </LinearLayout>
 </layout>

@@ -1,4 +1,4 @@
-package pt.ua.cm.n111763_114683_114715.androidproject
+package pt.ua.cm.n111763_114683_114715.androidproject.fragments
 
 
 import android.os.Bundle
@@ -10,13 +10,16 @@ import android.widget.*
 
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import pt.ua.cm.n111763_114683_114715.androidproject.Board
+import pt.ua.cm.n111763_114683_114715.androidproject.GameView
+import pt.ua.cm.n111763_114683_114715.androidproject.R
+import pt.ua.cm.n111763_114683_114715.androidproject.viewmodel.UserViewModel
 import pt.ua.cm.n111763_114683_114715.androidproject.databinding.FragmentPlayBinding
 
 class PlayFragment : Fragment(), OnClickListener {
@@ -108,22 +111,18 @@ class PlayFragment : Fragment(), OnClickListener {
         gameView.setup(gameBoard)
 
         // Get size of GameView to adjust board's tile scale
-        gameView.viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                if (doOnce){
-                    doOnce = false
-                    val width : Int = gameView.width / Board.width
-                    val height : Int = gameView.height / Board.height
-                    if (width < height){
-                        Board.tileSize = width
-                    }
-                    else{
-                        Board.tileSize = height
-                    }
+        gameView.viewTreeObserver.addOnGlobalLayoutListener {
+            if (doOnce) {
+                doOnce = false
+                val width: Int = gameView.width / Board.width
+                val height: Int = gameView.height / Board.height
+                if (width < height) {
+                    Board.tileSize = width
+                } else {
+                    Board.tileSize = height
                 }
             }
-        })
+        }
 
         // Start loop
         startLoop()

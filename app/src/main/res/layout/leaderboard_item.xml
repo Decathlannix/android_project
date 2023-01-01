@@ -5,14 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     app:cardCornerRadius="5dp"
-    app:cardBackgroundColor="#2F2F30"
+    app:cardUseCompatPadding="true"
+    app:cardBackgroundColor="#CDDC39"
     app:cardElevation="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:background="@drawable/gradient_bg">
 
             <ImageView
                 android:id="@+id/userImage"
@@ -21,13 +23,13 @@
                 android:layout_weight="1"
                 android:scaleType="fitXY"
                 android:padding="5dp"
-                android:background="#C8048DFA"
+                android:background="#CDDC39"
                 android:layout_marginEnd="4dp"/>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:orientation="vertical"
                 android:layout_marginStart="4dp">
 
@@ -36,11 +38,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:background="#CDDC39"
                     android:padding="5dp"
                     android:gravity="center"
-                    android:fontFamily="sans-serif-thin"
-                    android:textStyle="bold"
-                    android:background="#C8048DFA"
+                    android:fontFamily="@font/futura_black"
+                    android:textStyle="bold|italic"
                     android:layout_marginBottom="4dp"/>
 
                 <TextView
@@ -48,11 +52,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:background="#CDDC39"
                     android:padding="5dp"
                     android:gravity="center"
-                    android:fontFamily="sans-serif-thin"
-                    android:textStyle="bold"
-                    android:background="#C8048DFA"
+                    android:fontFamily="@font/futura_black"
+                    android:textStyle="bold|italic"
                     android:layout_marginTop="4dp"/>
             </LinearLayout>
         </LinearLayout>

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="pt.ua.cm.n111763_114683_114715.androidproject.LoginFragment"
+        android:name="pt.ua.cm.n111763_114683_114715.androidproject.fragments.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login">
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/createAccountFragment"
-        android:name="pt.ua.cm.n111763_114683_114715.androidproject.CreateAccountFragment"
+        android:name="pt.ua.cm.n111763_114683_114715.androidproject.fragments.CreateAccountFragment"
         android:label="Create an account"
         tools:layout="@layout/fragment_create_account">
         <action
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="pt.ua.cm.n111763_114683_114715.androidproject.ProfileFragment"
+        android:name="pt.ua.cm.n111763_114683_114715.androidproject.fragments.ProfileFragment"
         android:label="User Profile"
         tools:layout="@layout/fragment_profile">
         <action
@@ -40,17 +40,15 @@
             android:id="@+id/action_profileFragment_to_cameraFragment"
             app:destination="@id/cameraFragment" />
         <action
-<<<<<<< HEAD
             android:id="@+id/action_profileFragment_to_leaderboardFragment"
             app:destination="@id/leaderboardFragment" />
-=======
+        <action
             android:id="@+id/action_profileFragment_to_playFragment"
             app:destination="@id/playFragment" />
->>>>>>> 45e3fa79061b0b7a9dcd28a92bfa98cf87c342cc
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="pt.ua.cm.n111763_114683_114715.androidproject.CameraFragment"
+        android:name="pt.ua.cm.n111763_114683_114715.androidproject.fragments.CameraFragment"
         android:label="Take a Photo"
         tools:layout="@layout/fragment_camera">
         <action
@@ -60,21 +58,23 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-<<<<<<< HEAD
         android:id="@+id/leaderboardFragment"
-        android:name="pt.ua.cm.n111763_114683_114715.androidproject.LeaderboardFragment"
+        android:name="pt.ua.cm.n111763_114683_114715.androidproject.fragments.LeaderboardFragment"
         android:label="Leaderboards"
-        tools:layout="@layout/fragment_leaderboard" >
-        <action
-            android:id="@+id/action_leaderboardFragment_to_profileFragment"
-=======
-        android:id="@+id/playFragment"
-        android:name="pt.ua.cm.n111763_114683_114715.androidproject.PlayFragment"
-        android:label="PlayFragment"
-        tools:layout="@layout/fragment_play">
+        tools:layout="@layout/fragment_leaderboard">
         <action
             android:id="@+id/action_playFragment_to_profileFragment"
->>>>>>> 45e3fa79061b0b7a9dcd28a92bfa98cf87c342cc
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/playFragment"
+        android:name="pt.ua.cm.n111763_114683_114715.androidproject.fragments.PlayFragment"
+        android:label="PlayFragment"
+        tools:layout="@layout/fragment_play" >
+        <action
+            android:id="@+id/action_playFragment_to_profileFragment2"
             app:destination="@id/profileFragment"
             app:popUpTo="@id/profileFragment"
             app:popUpToInclusive="true" />

@@ -1,23 +1,14 @@
-package pt.ua.cm.n111763_114683_114715.androidproject
+package pt.ua.cm.n111763_114683_114715.androidproject.viewmodel
 
 import android.net.Uri
 import android.util.Log
-import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QueryDocumentSnapshot
-import com.google.firebase.firestore.auth.User
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.coroutines.*
 import java.io.File
-import java.io.PrintWriter
-import kotlin.coroutines.suspendCoroutine
 import kotlin.random.Random
 
 class UserViewModel: ViewModel() {
@@ -91,11 +82,13 @@ class UserViewModel: ViewModel() {
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     if (!document.getString("score").isNullOrBlank()) {
-                        auxList.add(UserInfo(
+                        auxList.add(
+                            UserInfo(
                             document.id,
                             document.getString("name")!!,
                             document.getString("email")!!,
-                            document.getString("score")!!.toInt()))
+                            document.getString("score")!!.toInt())
+                        )
                     }
                 }
                 fetchFirebaseStorageProfileData(auxList)

@@ -1,4 +1,4 @@
-package pt.ua.cm.n111763_114683_114715.androidproject
+package pt.ua.cm.n111763_114683_114715.androidproject.fragments
 
 import android.Manifest
 import android.content.ContentValues
@@ -22,6 +22,8 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import pt.ua.cm.n111763_114683_114715.androidproject.R
+import pt.ua.cm.n111763_114683_114715.androidproject.viewmodel.UserViewModel
 import pt.ua.cm.n111763_114683_114715.androidproject.databinding.FragmentCameraBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -134,7 +136,7 @@ class CameraFragment : Fragment() {
         private const val TAG = "CameraXApp"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {

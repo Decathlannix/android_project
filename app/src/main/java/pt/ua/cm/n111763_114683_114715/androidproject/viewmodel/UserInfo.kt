@@ -1,4 +1,4 @@
-package pt.ua.cm.n111763_114683_114715.androidproject
+package pt.ua.cm.n111763_114683_114715.androidproject.viewmodel
 
 class UserInfo(userID: String, userName: String, userEmail: String, userScore: Int, userImage: String="") {
     private var _uid: String
