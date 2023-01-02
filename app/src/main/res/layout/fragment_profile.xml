@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -9,64 +10,25 @@
         android:gravity="center"
         android:background="@drawable/tetris_background">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/emailText"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:orientation="horizontal"
+            android:layout_weight="1"
             android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp">
-
-            <TextView
-                android:id="@+id/emailText"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:textColor="#03A9F4"
-                android:textSize="20sp"
-                android:textStyle="bold|italic"
-                android:gravity="center"
-                android:fontFamily="@font/futura_black"
-                android:shadowColor="#FFFFFF"
-                android:shadowRadius="50"/>
-
-            <ImageButton
-                android:id="@+id/leaderboardButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/ic_leaderboard"
-                android:scaleType="fitCenter"/>
-
-            <ImageButton
-                android:id="@+id/locationButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:drawable/ic_menu_mylocation"
-                android:scaleType="fitCenter" />
-
-            <ImageButton
-                android:id="@+id/logoutButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/ic_logout"
-                android:scaleType="fitCenter"/>
-
-            <ImageButton
-                android:id="@+id/playButton"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/ic_email"
-                android:scaleType="fitCenter"/>
-        </LinearLayout>
+            android:layout_marginEnd="5dp"
+            android:textColor="#03A9F4"
+            android:textSize="20sp"
+            android:textStyle="bold|italic"
+            android:gravity="center"
+            android:fontFamily="@font/futura_black"
+            android:shadowColor="#FFFFFF"
+            android:shadowRadius="50"/>
 
         <RelativeLayout
             android:layout_width="200dp"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp">
 
@@ -110,7 +72,7 @@
                 android:id="@+id/usernameInput"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:hint="ENTER YOUR USERNAME"
+                android:hint="@string/enter_your_username_hint"
                 android:inputType="text"
                 android:textStyle="bold|italic"
                 android:background="@drawable/gradient_bg"/>
@@ -120,8 +82,8 @@
             android:id="@+id/saveButton"
             android:layout_height="0dp"
             android:layout_width="match_parent"
-            android:layout_weight="0.5"
-            android:text="Save"
+            android:layout_weight="1"
+            android:text="@string/save"
             android:fontFamily="@font/futura_black"
             android:textSize="25sp"
             android:textColor="@color/black"

@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">Tetris</string>
+    <string name="email_empty">Email cannot be empty</string>
+    <string name="password_empty">Password cannot be empty</string>
+    <string name="email_password_login_failed">Email &amp; password login failed…</string>
+    <string name="google_login_failed">Google login failed…</string>
+    <string name="account_creation_failed">Failed to create an account…</string>
+    <string name="dialog_title">Turn On Location</string>
+    <string name="dialog_message">This app requires you to enable location on your device to show your country in the leaderboards</string>
+    <string name="dialog_positive">Enable</string>
+    <string name="dialog_negative">Cancel</string>
+    <string name="photo_type">image/*</string>
+    <string name="leaderboard_name_email">%1$s (%2$s)</string>
+    <string name="leaderboard_score">Highest score: %1$d</string>
+    <string name="default_country">N/A</string>
+    <string name="play_option">Play</string>
+    <string name="update_location_option">Update Location</string>
+    <string name="leaderboard_option">Leaderboard</string>
+    <string name="about_us_option">About Us</string>
+    <string name="logout_option">Logout</string>
+    <string name="enter_your_username_hint">ENTER YOUR USERNAME</string>
+    <string name="save">Save</string>
+    <string name="enter_your_email_hint">ENTER YOUR EMAIL</string>
+    <string name="enter_your_password_hint">ENTER YOUR PASSWORD</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="leaderboard_title">Leaderboard</string>
+    <string name="cancel">Cancel</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="luis">Luís Chaves (114683)</string>
+    <string name="miguel">Miguel Monteiro (111763)</string>
+    <string name="nuno">Nuno Veloso (114715)</string>
 </resources>

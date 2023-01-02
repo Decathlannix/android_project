@@ -4,9 +4,6 @@ buildscript {
         // Google services plugin dependency
         classpath 'com.google.gms:google-services:4.3.14'
     }
-    ext {
-        navigationVersion = "2.5.3"
-    }
 }
 
 plugins {

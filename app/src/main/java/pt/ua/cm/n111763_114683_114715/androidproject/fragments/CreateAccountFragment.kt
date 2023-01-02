@@ -1,45 +1,29 @@
 package pt.ua.cm.n111763_114683_114715.androidproject.fragments
 
-import android.content.ContentValues
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import pt.ua.cm.n111763_114683_114715.androidproject.R
 import pt.ua.cm.n111763_114683_114715.androidproject.viewmodel.UserViewModel
 import pt.ua.cm.n111763_114683_114715.androidproject.databinding.FragmentCreateAccountBinding
+import timber.log.Timber
 
 class CreateAccountFragment : Fragment(), View.OnClickListener {
 
     private val viewModel: UserViewModel by activityViewModels()
     private lateinit var binding: FragmentCreateAccountBinding
-    private lateinit var auth: FirebaseAuth
-    private lateinit var emailInputText: TextInputEditText
-    private lateinit var passwordInputText: TextInputEditText
-    private lateinit var createAccountButton: TextView
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_create_account, container, false)
-        auth = Firebase.auth
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_account, container, false)
 
-        createAccountButton = binding.createAccount
-        emailInputText = binding.emailInput
-        passwordInputText = binding.passwordInput
-
-        createAccountButton.setOnClickListener(this)
+        binding.createAccount.setOnClickListener(this)
+        binding.cancel.setOnClickListener(this)
 
         return binding.root
     }
@@ -47,27 +31,29 @@ class CreateAccountFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.createAccount -> createAccount()
+            R.id.cancel -> findNavController().navigate(R.id.action_createAccountFragment_to_loginFragment)
         }
     }
 
     private fun createAccount() {
-        val email: String = emailInputText.text.toString()
-        val password: String = passwordInputText.text.toString()
+        val email: String = binding.emailInput.text.toString()
+        val password: String = binding.passwordInput.text.toString()
+
         if (email.isEmpty()) {
-            emailInputText.error = "Email cannot be empty"
-            emailInputText.requestFocus()
+            binding.emailInput.error =  getString(R.string.email_empty)
+            binding.emailInput.requestFocus()
         } else if (password.isEmpty()) {
-            passwordInputText.error = "Password cannot be empty"
-            passwordInputText.requestFocus()
+            binding.passwordInput.error =  getString(R.string.password_empty)
+            binding.passwordInput.requestFocus()
         } else {
-            auth.createUserWithEmailAndPassword(email, password)
+            viewModel.auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) {
                     if (it.isSuccessful) {
-                        viewModel.saveLoginData(auth.currentUser!!.providerData[0].email!!, auth.currentUser!!.providerData[0].uid)
+                        viewModel.loadProfileData(viewModel.auth.currentUser!!.providerData[0].email!!, viewModel.auth.currentUser!!.providerData[0].uid)
                         findNavController().navigate(R.id.action_createAccountFragment_to_profileFragment)
                     } else {
-                        Toast.makeText(requireContext(), "Account creation failed", Toast.LENGTH_LONG).show()
-                        Log.e(ContentValues.TAG, "createAccount: ${it.exception.toString()}")
+                        Toast.makeText(requireContext(), getString(R.string.account_creation_failed), Toast.LENGTH_LONG).show()
+                        Timber.e("createAccount: ${it.exception.toString()}")
                     }
                 }
         }

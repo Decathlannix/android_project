@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.murgupluoglu.flagkit.FlagKit
@@ -32,10 +33,18 @@ class LeaderboardAdapter: RecyclerView.Adapter<LeaderboardAdapter.ViewHolder>() 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.userName.text = "${usersLeaderboardInfo[position].name} (${usersLeaderboardInfo[position].email})"
-        Glide.with(holder.itemView).load(usersLeaderboardInfo[position].image).into(holder.userImage)
-        holder.userScore.text = "Highest score: ${usersLeaderboardInfo[position].score}"
-        Glide.with(holder.itemView).load(FlagKit.getDrawable(holder.itemView.context, usersLeaderboardInfo[position].country)).into(holder.countryImage)
+        holder.userName.text = holder.itemView.context.getString(R.string.leaderboard_name_email, usersLeaderboardInfo[position].name, usersLeaderboardInfo[position].email)
+        holder.userScore.text = holder.itemView.context.getString(R.string.leaderboard_score, usersLeaderboardInfo[position].score)
+        if (usersLeaderboardInfo[position].image == "") {
+            Glide.with(holder.itemView).load(AppCompatResources.getDrawable(holder.itemView.context, R.drawable.ic_default_image)).into(holder.userImage)
+        } else {
+            Glide.with(holder.itemView).load(usersLeaderboardInfo[position].image).into(holder.userImage)
+        }
+        if (usersLeaderboardInfo[position].country == holder.itemView.context.getString(R.string.default_country)) {
+            Glide.with(holder.itemView).load(AppCompatResources.getDrawable(holder.itemView.context, R.drawable.ic_default_flag)).into(holder.countryImage)
+        } else {
+            Glide.with(holder.itemView).load(FlagKit.getDrawable(holder.itemView.context, usersLeaderboardInfo[position].country)).into(holder.countryImage)
+        }
     }
 
     override fun getItemCount() = usersLeaderboardInfo.size

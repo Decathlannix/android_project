@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/playButton"
+        android:title="@string/play_option"/>
+
+    <item
+        android:id="@+id/updateLocationButton"
+        android:title="@string/update_location_option"/>
+
+    <item
+        android:id="@+id/leaderboardButton"
+        android:title="@string/leaderboard_option"/>
+
+    <item
+        android:id="@+id/aboutUsButton"
+        android:title="@string/about_us_option"/>
+
+    <item
+        android:id="@+id/logOutButton"
+        android:title="@string/logout_option"/>
+</menu>

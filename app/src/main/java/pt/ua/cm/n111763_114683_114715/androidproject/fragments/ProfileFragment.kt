@@ -11,13 +11,9 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
 import android.view.View.OnClickListener
-import android.view.ViewGroup
-import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -30,72 +26,28 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.Task
-import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import pt.ua.cm.n111763_114683_114715.androidproject.R
 import pt.ua.cm.n111763_114683_114715.androidproject.viewmodel.UserViewModel
 import pt.ua.cm.n111763_114683_114715.androidproject.databinding.FragmentProfileBinding
+import pt.ua.cm.n111763_114683_114715.androidproject.utils.Utils.LOCATION_REQUIRE_PERMISSIONS
+import timber.log.Timber
 import java.util.*
 
 class ProfileFragment : Fragment(), OnClickListener {
 
     private val viewModel: UserViewModel by activityViewModels()
     private lateinit var binding: FragmentProfileBinding
-    private lateinit var firestore: FirebaseFirestore
-    private lateinit var userImage: ImageView
-    private lateinit var takePhotoButton: ImageButton
-    private lateinit var choosePhotoButton: ImageButton
-    private lateinit var userName: TextInputEditText
-    private lateinit var saveButton: Button
-    private lateinit var emailText: TextView
-    private lateinit var leaderboardButton: ImageButton
-    private lateinit var logoutButton: ImageButton
-    private lateinit var playButton: ImageButton
-    private lateinit var locationButton: ImageButton
     private lateinit var launcher: ActivityResultLauncher<Intent>
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
-        firestore = FirebaseFirestore.getInstance()
+        setHasOptionsMenu(true)
 
-        userImage = binding.userImage
-        takePhotoButton = binding.takePhotoButton
-        choosePhotoButton = binding.choosePhotoButton
-        userName = binding.usernameInput
-        saveButton = binding.saveButton
-        emailText = binding.emailText
-        leaderboardButton = binding.leaderboardButton
-        logoutButton = binding.logoutButton
-        playButton = binding.playButton
-        locationButton = binding.locationButton
-
-        takePhotoButton.setOnClickListener(this)
-        choosePhotoButton.setOnClickListener(this)
-        saveButton.setOnClickListener(this)
-        leaderboardButton.setOnClickListener(this)
-        logoutButton.setOnClickListener(this)
-        playButton.setOnClickListener(this)
-        locationButton.setOnClickListener(this)
-        emailText.text = viewModel.email
-
-        viewModel.username.observe(viewLifecycleOwner) {
-            it.let {
-                userName.setText(it)
-            }
-        }
-
-        viewModel.photoURI.observe(viewLifecycleOwner) {
-            it.let {
-                Glide.with(requireContext()).load(it).into(userImage)
-            }
-        }
+        binding.takePhotoButton.setOnClickListener(this)
+        binding.choosePhotoButton.setOnClickListener(this)
+        binding.saveButton.setOnClickListener(this)
+        binding.emailText.text = viewModel.email
 
         launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
@@ -103,60 +55,80 @@ class ProfileFragment : Fragment(), OnClickListener {
             }
         }
 
-        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-            val granted = it.entries.all { it.value == true }
-            if(granted){
+        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            val granted = permissions.entries.all { permission -> permission.value }
+            if (granted) {
                 fetchLocation()
             }
         }
 
+        // Observe the viewmodel's live data to change the UI whenever changes happen
+        viewModel.username.observe(viewLifecycleOwner) {
+            it.let {
+                binding.usernameInput.setText(it)
+            }
+        }
+        viewModel.photoURI.observe(viewLifecycleOwner) {
+            it.let {
+                Glide.with(requireContext()).load(it).into(binding.userImage)
+            }
+        }
+
+        // Perform initial location fetching to save user's country code
         updateLocation()
 
         return binding.root
     }
 
-    @SuppressLint("MissingPermission")
-    private fun fetchLocation() {
-        // Location
-        val fusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(requireActivity())
-        val task: Task<Location> = fusedLocationProviderClient.lastLocation
-
-        task.addOnSuccessListener {
-            if (it != null) {
-                val geocoder = Geocoder(requireContext(), Locale.getDefault())
-                val addresses: MutableList<Address> =
-                    geocoder.getFromLocation(it.latitude, it.longitude, 1)
-                viewModel.saveCountry(addresses[0].countryCode)
-
-            } else {
-                val locationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    val builder = AlertDialog.Builder(requireContext())
-                    with(builder)
-                    {
-                        setTitle("Turn On Location")
-                        setMessage("You need to turn on location to set your country")
-                        setPositiveButton("Turn On") { _, _ ->
-                            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-                        }
-                        setNegativeButton("Cancel", null)
-                        show()
-                    }
-                }
-            }
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.takePhotoButton -> findNavController().navigate(R.id.action_profileFragment_to_cameraFragment)
+            R.id.choosePhotoButton -> choosePhoto()
+            R.id.saveButton -> saveProfile()
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.options_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.playButton -> {
+                play()
+                return true
+            }
+            R.id.updateLocationButton -> {
+                updateLocation()
+                return true
+            }
+            R.id.leaderboardButton -> {
+                findNavController().navigate(R.id.action_profileFragment_to_leaderboardFragment)
+                return true
+            }
+            R.id.aboutUsButton -> {
+                findNavController().navigate(R.id.action_profileFragment_to_aboutUsFragment)
+                return true
+            }
+            R.id.logOutButton -> {
+                logOut()
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun updateLocation() {
+        if (checkPermissions(LOCATION_REQUIRE_PERMISSIONS)) {
+            fetchLocation()
+        }
+    }
 
     private fun checkPermissions(permissionsToCheck: Array<String>): Boolean {
         val permissionsToRequest = mutableListOf<String>()
         for (permission in permissionsToCheck) {
-            if (ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    permission
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
+            if (ActivityCompat.checkSelfPermission(requireContext(), permission) != PackageManager.PERMISSION_GRANTED) {
                 permissionsToRequest.add(permission)
             }
         }
@@ -167,58 +139,65 @@ class ProfileFragment : Fragment(), OnClickListener {
         return true
     }
 
-    override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.takePhotoButton -> findNavController().navigate(R.id.action_profileFragment_to_cameraFragment)
-            R.id.choosePhotoButton -> choosePhoto()
-            R.id.saveButton -> saveProfile()
-            R.id.leaderboardButton -> findNavController().navigate(R.id.action_profileFragment_to_leaderboardFragment)
-            R.id.logoutButton -> logOut()
-            R.id.playButton -> play()
-            R.id.locationButton -> updateLocation()
+    @SuppressLint("MissingPermission") // All permissions are granted at this point
+    private fun fetchLocation() {
+        // Obtain user's last location
+        val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        val task: Task<Location> = fusedLocationProviderClient.lastLocation
+
+        task.addOnSuccessListener { location ->
+            if (location != null) {
+                val geocoder = Geocoder(requireContext(), Locale.getDefault())
+                val addresses: MutableList<Address> = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                // Save the country code, using the FlagKit library
+                viewModel.saveCountry(addresses[0].countryCode)
+            } else {
+                // In case the location isn't enabled on the device, a dialog box appears
+                // asking the user to enable it and sends him to the appropriate settings page
+                val locationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    val builder = AlertDialog.Builder(requireContext())
+                    with(builder)
+                    {
+                        setTitle(getString(R.string.dialog_title))
+                        setMessage(getString(R.string.dialog_message))
+                        setPositiveButton(getString(R.string.dialog_positive)) { _, _ ->
+                            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+                        }
+                        setNegativeButton(getString(R.string.dialog_negative), null)
+                        show()
+                    }
+                }
+            }
         }
     }
 
-    private fun updateLocation() {
-        if (checkPermissions(
-                arrayOf(
-                    android.Manifest.permission.INTERNET,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION,
-                    android.Manifest.permission.ACCESS_COARSE_LOCATION
-                )
-            )
-        ) {
-            fetchLocation()
+    private fun saveProfile() {
+        if (binding.usernameInput.text.toString().isEmpty()) {
+            binding.usernameInput.error = getString(R.string.email_empty)
+            binding.usernameInput.requestFocus()
+        } else {
+            viewModel.saveProfileToFirestore(binding.usernameInput.text.toString())
         }
     }
 
     private fun choosePhoto() {
         val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
+        intent.type = getString(R.string.photo_type)
         launcher.launch(intent)
     }
 
-    private fun saveProfile() {
-        if (userName.text.toString().isEmpty()) {
-            userName.error = "Username cannot be empty"
-            userName.requestFocus()
-        } else {
-            viewModel.saveProfileToFirestore(userName.text.toString())
-        }
-    }
-
     private fun logOut() {
-        if (Firebase.auth.currentUser != null) {
-            Log.i("TAG", "Firebase Log Out")
-            Firebase.auth.signOut()
+        if (viewModel.isEmailPasswordLogged()) {
+            Timber.i("(Email & password) Log Out")
+            viewModel.emailPasswordSignOut()
         } else {
-            Log.i("TAG", "Google Log Out")
-            val options: GoogleSignInOptions =
-                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestEmail()
-                    .build()
+            Timber.i("(Google) Log Out")
+            val options: GoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
             val googleSignInClient = GoogleSignIn.getClient(requireActivity(), options)
-            googleSignInClient.signOut()
+            viewModel.googleSignOut(googleSignInClient)
         }
         viewModel.clearProfileData()
         findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
@@ -227,6 +206,4 @@ class ProfileFragment : Fragment(), OnClickListener {
     private fun play() {
         findNavController().navigate(R.id.action_profileFragment_to_playFragment)
     }
-
-
 }

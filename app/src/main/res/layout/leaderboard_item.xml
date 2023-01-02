@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="200dp"
     app:cardBackgroundColor="#CDDC39"
@@ -59,8 +58,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:layout_marginTop="4dp"
-                    android:layout_marginEnd="4dp"
-                    tools:srcCompat="@drawable/ug" />
+                    android:layout_marginEnd="4dp" />
 
                 <TextView
                     android:id="@+id/userScore"
@@ -75,8 +73,6 @@
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold|italic" />
-
-
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

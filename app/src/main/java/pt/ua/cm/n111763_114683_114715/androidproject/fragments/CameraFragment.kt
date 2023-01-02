@@ -1,12 +1,10 @@
 package pt.ua.cm.n111763_114683_114715.androidproject.fragments
 
-import android.Manifest
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +23,8 @@ import androidx.navigation.fragment.findNavController
 import pt.ua.cm.n111763_114683_114715.androidproject.R
 import pt.ua.cm.n111763_114683_114715.androidproject.viewmodel.UserViewModel
 import pt.ua.cm.n111763_114683_114715.androidproject.databinding.FragmentCameraBinding
+import pt.ua.cm.n111763_114683_114715.androidproject.utils.Utils
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -41,7 +41,7 @@ class CameraFragment : Fragment() {
         if (allPermissionsGranted()) {
             startCamera()
         } else {
-            ActivityCompat.requestPermissions(requireActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+            ActivityCompat.requestPermissions(requireActivity(), Utils.CAMERA_REQUIRED_PERMISSIONS, Utils.REQUEST_CODE_CAMERA_PERMISSIONS)
         }
 
         // Set up the listener for take photo button
@@ -51,7 +51,7 @@ class CameraFragment : Fragment() {
     }
 
     private fun allPermissionsGranted() =
-        REQUIRED_PERMISSIONS.all {
+        Utils.CAMERA_REQUIRED_PERMISSIONS.all {
             ContextCompat.checkSelfPermission(requireContext(), it
             ) == PackageManager.PERMISSION_GRANTED
         }
@@ -84,7 +84,7 @@ class CameraFragment : Fragment() {
                     this, cameraSelector, preview, imageCapture)
 
             } catch(exc: Exception) {
-                Log.e(TAG, "Use case binding failed", exc)
+                Timber.e("Use case binding failed: $exc")
             }
 
         }, ContextCompat.getMainExecutor(requireContext()))
@@ -95,7 +95,7 @@ class CameraFragment : Fragment() {
         val imageCapture = imageCapture ?: return
 
         // Create time stamped name and MediaStore entry.
-        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())
+        val name = SimpleDateFormat(Utils.FILENAME_FORMAT, Locale.US).format(System.currentTimeMillis())
 
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, name)
@@ -119,28 +119,20 @@ class CameraFragment : Fragment() {
             ContextCompat.getMainExecutor(requireContext()),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
-                    Log.e(TAG, "Photo capture failed: ${exc.message}", exc)
+                    Timber.e("Photo capture failed: ${exc.message}")
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults){
-                    Toast.makeText(requireContext(), "Photo capture succeeded: ${output.savedUri}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Photo capture succeeded: ${output.savedUri}", Toast.LENGTH_LONG).show()
                     viewModel.savePhotoURI(output.savedUri!!.toString())
-                    Log.i("SAVED URI", viewModel.photoURI.value!!)
                     findNavController().navigate(R.id.action_cameraFragment_to_profileFragment)
                 }
             }
         )
     }
 
-    companion object {
-        private const val TAG = "CameraXApp"
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
-        private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    }
-
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
+        if (requestCode == Utils.REQUEST_CODE_CAMERA_PERMISSIONS) {
             if (allPermissionsGranted()) {
                 startCamera()
             } else {
