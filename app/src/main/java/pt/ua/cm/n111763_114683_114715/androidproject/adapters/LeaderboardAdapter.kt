@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.murgupluoglu.flagkit.FlagKit
 import pt.ua.cm.n111763_114683_114715.androidproject.R
 import pt.ua.cm.n111763_114683_114715.androidproject.viewmodel.UserInfo
 
@@ -15,6 +16,7 @@ class LeaderboardAdapter: RecyclerView.Adapter<LeaderboardAdapter.ViewHolder>() 
         val userName: TextView = itemView.findViewById(R.id.userName)
         val userImage: ImageView = itemView.findViewById(R.id.userImage)
         val userScore: TextView = itemView.findViewById(R.id.userScore)
+        val countryImage: ImageView = itemView.findViewById(R.id.countryImage)
     }
 
     var usersLeaderboardInfo = mutableListOf<UserInfo>()
@@ -33,6 +35,7 @@ class LeaderboardAdapter: RecyclerView.Adapter<LeaderboardAdapter.ViewHolder>() 
         holder.userName.text = "${usersLeaderboardInfo[position].name} (${usersLeaderboardInfo[position].email})"
         Glide.with(holder.itemView).load(usersLeaderboardInfo[position].image).into(holder.userImage)
         holder.userScore.text = "Highest score: ${usersLeaderboardInfo[position].score}"
+        Glide.with(holder.itemView).load(FlagKit.getDrawable(holder.itemView.context, usersLeaderboardInfo[position].country)).into(holder.countryImage)
     }
 
     override fun getItemCount() = usersLeaderboardInfo.size

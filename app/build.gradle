@@ -81,4 +81,10 @@ dependencies {
     implementation "androidx.camera:camera-video:1.1.0-beta01"
     implementation "androidx.camera:camera-view:1.1.0-beta01"
     implementation "androidx.camera:camera-extensions:1.1.0-beta01"
+
+    // Location
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
+
+    // FlagKit
+    implementation 'com.github.murgupluoglu:flagkit-android:1.0.2'
 }
