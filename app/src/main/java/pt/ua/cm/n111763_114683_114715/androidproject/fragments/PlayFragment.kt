@@ -205,12 +205,19 @@ class PlayFragment : Fragment(), SensorEventListener {
 
                 }
 
-                gameView.invalidate()
+                requireActivity().runOnUiThread {
+                    gameView.invalidate()
+                }
+
                 delay(delayTime)
             }
 
-            Log.d("DEBUG", "OutOfTheLoop")
+            setUpHighscore()
         }
+    }
+
+    private fun setUpHighscore(){
+        viewModel.saveHighscore(gameBoard.score)
     }
 
     //:::::::::::::::::::::: Sensors ::::::::::::::::::::::::::::::::::::::::::::

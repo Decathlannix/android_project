@@ -54,7 +54,7 @@ class UserViewModel : ViewModel() {
                             "country" to "N/A",
                             "email" to _email,
                             "name" to _email,
-                            "score" to Random.nextInt(1, 21).toString() // RETIRAR!!
+                            "score" to "0"
                         )
                         task.result.reference.set(data)
                         _country = "N/A"
@@ -100,6 +100,26 @@ class UserViewModel : ViewModel() {
 
         val picturePathRef = FirebaseStorage.getInstance().reference.child("images/${_uid}/avatar.jpg")
         picturePathRef.putFile(_photoURI.value!!.toUri())
+    }
+
+    fun saveHighscore(highscore : Int){
+
+        var tempScore = 0
+
+        FirebaseFirestore.getInstance().collection("users").document(_uid).get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    tempScore = task.result.getString("score")!!.toInt()
+                }
+            }
+
+        if (highscore > tempScore){
+
+            FirebaseFirestore.getInstance()
+                .collection("users")
+                .document(_uid)
+                .update("score", highscore.toString())
+        }
     }
 
     fun loadLeaderboardInfoFromFirebase() {
