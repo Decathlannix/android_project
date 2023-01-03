@@ -30,4 +30,7 @@
     <string name="luis">Luís Chaves (114683)</string>
     <string name="miguel">Miguel Monteiro (111763)</string>
     <string name="nuno">Nuno Veloso (114715)</string>
+    <string name="score">Score:</string>
+    <string name="level">Level:</string>
+    <string name="lines">Lines:</string>
 </resources>
