@@ -1,91 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:background="@drawable/bg_pattern"
         android:gravity="center"
-        android:background="@drawable/tetris_background">
+        android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
-            android:gravity="bottom"
-            app:startIconDrawable="@drawable/ic_email"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:layout_weight="2"
+            android:gravity="bottom"
+            app:startIconDrawable="@drawable/ic_email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailInput"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradient_bg"
+                android:fontFamily="@font/bodrumsoft_bold"
                 android:hint="@string/enter_your_email_hint"
-                android:textStyle="bold|italic"
-                android:inputType="textEmailAddress"
-                android:background="@drawable/gradient_bg"/>
+                android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_weight="2"
             android:gravity="top"
-            app:startIconDrawable="@drawable/ic_password"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp">
+            app:startIconDrawable="@drawable/ic_password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordInput"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradient_bg"
+                android:fontFamily="@font/bodrumsoft_bold"
                 android:hint="@string/enter_your_password_hint"
-                android:textStyle="bold|italic"
-                android:inputType="textPassword"
-                android:background="@drawable/gradient_bg"/>
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:orientation="horizontal"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:gravity="center">
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/createAccount"
-                android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                android:text="@string/sign_up"
-                android:fontFamily="@font/futura_black"
-                android:textSize="25sp"
-                android:textColor="@color/black"
-                android:textStyle="italic|bold"
-                android:gravity="center"
                 android:backgroundTint="#CDDC39"
-                android:layout_marginEnd="5dp"/>
+                android:gravity="center"
+                android:shadowColor="#ffffff"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="1"
+                android:text="@string/sign_up"
+                android:textSize="25sp" />
 
             <Button
                 android:id="@+id/cancel"
-                android:layout_height="match_parent"
                 android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
                 android:layout_weight="1"
-                android:text="@string/cancel"
-                android:fontFamily="@font/futura_black"
-                android:textSize="25sp"
-                android:textColor="@color/black"
-                android:textStyle="italic|bold"
-                android:gravity="center"
                 android:backgroundTint="#CDDC39"
-                android:layout_marginStart="5dp"/>
+                android:gravity="center"
+                android:shadowColor="#ffffff"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="1"
+                android:text="@string/cancel"
+                android:textSize="25sp" />
         </LinearLayout>
     </LinearLayout>
 </layout>

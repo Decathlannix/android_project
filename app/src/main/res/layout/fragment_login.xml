@@ -5,113 +5,113 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:background="@drawable/bg_pattern"
         android:gravity="center"
-        android:background="@drawable/tetris_background">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="center"
+            android:shadowColor="#ffffff"
+            android:shadowDx="5"
+            android:shadowDy="5"
+            android:shadowRadius="1"
             android:text="@string/app_name"
             android:textAllCaps="true"
             android:textColor="#000000"
-            android:textSize="50sp"
-            android:textStyle="bold|italic"
-            android:gravity="center"
-            android:fontFamily="@font/futura_black"
-            android:shadowColor="#FFFFFF"
-            android:shadowRadius="50"/>
+            android:textSize="100sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="bottom"
-            app:startIconDrawable="@drawable/ic_email"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            app:startIconDrawable="@drawable/ic_email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailInput"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradient_bg"
+                android:fontFamily="@font/bodrumsoft_bold"
                 android:hint="@string/enter_your_email_hint"
-                android:textStyle="bold|italic"
-                android:inputType="textEmailAddress"
-                android:background="@drawable/gradient_bg"/>
+                android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:gravity="top"
-            app:startIconDrawable="@drawable/ic_password"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp">
+            app:startIconDrawable="@drawable/ic_password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passwordInput"
-                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradient_bg"
+                android:fontFamily="@font/bodrumsoft_bold"
                 android:hint="@string/enter_your_password_hint"
-                android:textStyle="bold|italic"
-                android:inputType="textPassword"
-                android:background="@drawable/gradient_bg"/>
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:gravity="center">
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/logInEmailPassword"
-                android:layout_height="0dp"
                 android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="@string/login"
-                android:fontFamily="@font/futura_black"
-                android:textSize="25sp"
-                android:textColor="@color/black"
-                android:textStyle="italic|bold"
                 android:gravity="center"
-                android:backgroundTint="#CDDC39"/>
+                android:shadowColor="#ffffff"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="1"
+                android:text="@string/login"
+                android:textSize="25sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/createAccount"
-                    android:layout_height="match_parent"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
                     android:layout_marginEnd="5dp"
-                    android:text="@string/sign_up"
-                    android:fontFamily="@font/futura_black"
-                    android:textSize="25sp"
-                    android:textColor="@color/black"
-                    android:textStyle="italic|bold"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:backgroundTint="#03A9F4"/>
+                    android:shadowColor="#ffffff"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="1"
+                    android:text="@string/sign_up"
+                    android:textSize="25sp" />
 
                 <com.google.android.gms.common.SignInButton
                     android:id="@+id/logInGoogle"
-                    android:layout_height="match_parent"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginStart="5dp"/>
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

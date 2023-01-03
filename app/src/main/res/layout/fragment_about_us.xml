@@ -1,115 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:background="@drawable/bg_pattern"
         android:gravity="center"
-        android:background="@drawable/tetris_background">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
+            android:gravity="center"
+            android:shadowColor="#ffffff"
+            android:shadowDx="5"
+            android:shadowDy="5"
+            android:shadowRadius="1"
             android:text="@string/about_us_option"
             android:textColor="#000000"
-            android:textSize="40sp"
-            android:textStyle="bold|italic"
-            android:gravity="center"
-            android:fontFamily="@font/futura_black"
-            android:shadowColor="#FFFFFF"
-            android:shadowRadius="50"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="5dp"/>
+            android:textSize="72sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:orientation="horizontal"
             android:gravity="center"
-            android:layout_margin="10dp">
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:scaleType="fitXY"
-                android:src="@drawable/luis"
                 android:background="@color/black"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/luis" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.5"
+                android:gravity="center"
+                android:shadowColor="#ffffff"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="1"
                 android:text="@string/luis"
                 android:textColor="#FF0000"
-                android:textSize="20sp"
-                android:textStyle="bold|italic"
-                android:gravity="center"
-                android:fontFamily="@font/futura_black"/>
+                android:textSize="30sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:orientation="horizontal"
             android:gravity="center"
-            android:layout_margin="10dp">
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:scaleType="fitXY"
-                android:src="@drawable/miguel"
                 android:background="@color/black"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/miguel" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.5"
+                android:gravity="center"
+                android:shadowColor="#ffffff"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="1"
                 android:text="@string/miguel"
                 android:textColor="#CDDC39"
-                android:textSize="20sp"
-                android:textStyle="bold|italic"
-                android:gravity="center"
-                android:fontFamily="@font/futura_black"/>
+                android:textSize="30sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="10dp"
             android:layout_weight="1"
-            android:orientation="horizontal"
             android:gravity="center"
-            android:layout_margin="10dp">
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/userImage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:scaleType="fitXY"
-                android:src="@drawable/nuno"
                 android:background="@color/black"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/nuno" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1.5"
+                android:gravity="center"
+                android:shadowColor="#ffffff"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="1"
                 android:text="@string/nuno"
                 android:textColor="#03A9F4"
-                android:textSize="20sp"
-                android:textStyle="bold|italic"
-                android:gravity="center"
-                android:fontFamily="@font/futura_black"/>
+                android:textSize="30sp" />
         </LinearLayout>
 
     </LinearLayout>
