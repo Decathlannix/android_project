@@ -8,23 +8,26 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.*
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import pt.ua.cm.n111763_114683_114715.androidproject.R
+import pt.ua.cm.n111763_114683_114715.androidproject.databinding.FragmentPlayBinding
 import pt.ua.cm.n111763_114683_114715.androidproject.gameobjects.Board
 import pt.ua.cm.n111763_114683_114715.androidproject.gameobjects.GameView
-import pt.ua.cm.n111763_114683_114715.androidproject.R
 import pt.ua.cm.n111763_114683_114715.androidproject.viewmodel.UserViewModel
-import pt.ua.cm.n111763_114683_114715.androidproject.databinding.FragmentPlayBinding
 import java.util.*
+
 
 class PlayFragment : Fragment(), SensorEventListener {
 
@@ -147,6 +150,7 @@ class PlayFragment : Fragment(), SensorEventListener {
                 doOnce = false
                 val width: Int = gameView.width / Board.width
                 val height: Int = gameView.height / Board.height
+
                 if (width < height) {
                     Board.tileSize = width
                 } else {
@@ -212,11 +216,28 @@ class PlayFragment : Fragment(), SensorEventListener {
                 delay(delayTime)
             }
 
-            setUpHighscore()
+            requireActivity().runOnUiThread {
+                setUpEndgame()
+            }
+
         }
     }
 
-    private fun setUpHighscore(){
+    private fun setUpEndgame(){
+
+        val window = PopupWindow(requireActivity())
+        val view = layoutInflater.inflate(R.layout.endgame_popup, null)
+        window.contentView = view
+
+        val btnReturn = view.findViewById<Button>(R.id.btnReturn)
+
+        btnReturn.setOnClickListener {
+            window.dismiss()
+            findNavController().navigate(R.id.action_playFragment_to_profileFragment2)
+        }
+
+        window.showAtLocation(gameView, Gravity.CENTER, 0, 0)
+
         viewModel.saveHighscore(gameBoard.score)
     }
 
