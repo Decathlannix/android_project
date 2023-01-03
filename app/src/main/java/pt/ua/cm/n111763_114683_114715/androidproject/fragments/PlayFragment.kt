@@ -17,10 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import pt.ua.cm.n111763_114683_114715.androidproject.R
 import pt.ua.cm.n111763_114683_114715.androidproject.databinding.FragmentPlayBinding
 import pt.ua.cm.n111763_114683_114715.androidproject.gameobjects.Board
@@ -34,6 +31,7 @@ class PlayFragment : Fragment(), SensorEventListener {
     private val viewModel: UserViewModel by activityViewModels()
     private lateinit var binding: FragmentPlayBinding
     private lateinit var firestore: FirebaseFirestore
+    private lateinit var job: Job
 
     private lateinit var gameView: GameView
     private lateinit var downButton: ImageButton
@@ -66,7 +64,6 @@ class PlayFragment : Fragment(), SensorEventListener {
     private var moveDelay: Int = fps / 3  //Delay between pressing button and piece moving at moveSpeed while holding
     private var moveSpeedCounter: Int = 0
     private var moveDirection = 0
-
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
@@ -178,7 +175,7 @@ class PlayFragment : Fragment(), SensorEventListener {
     }
 
     private fun startLoop() {
-        CoroutineScope(Dispatchers.IO).launch {
+        job = CoroutineScope(Dispatchers.IO).launch {
 
             val delayTime: Long = (1000 / fps).toLong()
 
@@ -303,6 +300,7 @@ class PlayFragment : Fragment(), SensorEventListener {
 
     override fun onDestroy() {
         sensorManager.unregisterListener(this)
+        job.cancel()
         super.onDestroy()
     }
 
