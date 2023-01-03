@@ -9,24 +9,71 @@
         android:layout_margin="10dp"
         android:gravity="center">
 
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:layout_marginTop="20dp"
-            android:text="Save"
-            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal">
 
-        <pt.ua.cm.n111763_114683_114715.androidproject.GameView
+            <TextView
+                android:id="@+id/txtScoreName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="Score:"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtScoreValue"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="0"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtLinesClrdName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="Lines:"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtLinesClrdValue"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="0"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtLevelName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="Level:"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txtLevelValue"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="1"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <pt.ua.cm.n111763_114683_114715.androidproject.gameobjects.GameView
             android:id="@+id/myGameView"
-            android:layout_width="wrap_content"
-            android:layout_height="500dp" />
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            android:layout_weight="1"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
             android:orientation="horizontal">
 
             <ImageButton
@@ -34,32 +81,32 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/ic_email"
-                android:scaleType="fitCenter"/>
+                android:background="@drawable/arrow_left"
+                android:scaleType="centerInside"/>
 
             <ImageButton
                 android:id="@+id/downButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/ic_email"
-                android:scaleType="fitCenter"/>
+                android:background="@drawable/arrow_down"
+                android:scaleType="centerInside"/>
 
             <ImageButton
                 android:id="@+id/rightButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/ic_email"
-                android:scaleType="fitCenter"/>
+                android:background="@drawable/arrow_right"
+                android:scaleType="centerInside"/>
 
             <ImageButton
                 android:id="@+id/rotateButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/ic_email"
-                android:scaleType="fitCenter"/>
+                android:background="@drawable/arrow_rotate"
+                android:scaleType="centerInside"/>
         </LinearLayout>
     </LinearLayout>
 </layout>

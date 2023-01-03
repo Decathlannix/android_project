@@ -1,8 +1,7 @@
-package pt.ua.cm.n111763_114683_114715.androidproject
+package pt.ua.cm.n111763_114683_114715.androidproject.gameobjects
 
 import android.graphics.Paint
 import android.graphics.Rect
-import android.util.Log
 
 class Square( inColor : Int, inPosition : Pair<Int, Int>, val boardRef : Board) {
 
@@ -36,7 +35,7 @@ class Square( inColor : Int, inPosition : Pair<Int, Int>, val boardRef : Board) 
         }
     }
 
-    fun canMove(unitsToMove : Pair<Int, Int>) : MOVEOPTIONS{
+    fun canMove(unitsToMove : Pair<Int, Int>) : MOVEOPTIONS {
 
         val adjacentState = boardRef.getIsAdjacentFree(position)
         var canMove = MOVEOPTIONS.CAN
@@ -66,7 +65,7 @@ class Square( inColor : Int, inPosition : Pair<Int, Int>, val boardRef : Board) 
         }
     }
 
-    fun checkNewPosition(newPos : Pair<Int, Int>) : MOVEOPTIONS{
+    fun checkNewPosition(newPos : Pair<Int, Int>) : MOVEOPTIONS {
         var state = MOVEOPTIONS.CAN
         if (boardRef.checkIfPosIsOccupied(newPos)){
             state = MOVEOPTIONS.CANT
